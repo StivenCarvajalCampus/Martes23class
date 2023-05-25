@@ -1,14 +1,12 @@
 <?php
-header("Content-Type: application/json");
+    header('Access-Control-Allow-Origin: *');
+    //header("Content-Type: application/json");
+    function autoload($class){
+        require 'entidad/'.$class.'.php';
+    }
+    spl_autoload_register('autoload');
 
-function autoload ($class){
-    require __DIR__.'/entidad/'.$class.'.php';
-
-  }
-  spl_autoload_register('autoload');
-  $res= (object) [
-    "Clase_usuario"=> User::getUser(),
-    "Clase_informacion"=>Info::getInfo()
-  ];
-  echo json_encode($res.JSON_PRETTY_PRINT);
+    $res = new users("pepito","H467", "../db.json");
+    $data = (object) ["user"=>"Stiven", "name"=>"Stiven", "pwd"=>3221, "age"=>0];
+    echo json_encode($res->postUser($data));
 ?>
